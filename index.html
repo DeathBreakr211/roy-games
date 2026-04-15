@@ -77,6 +77,7 @@ background:rgba(255,255,255,0.05);
 border-radius:50px;
 border:1px solid rgba(0,245,255,0.2);
 overflow:hidden;
+margin-top:10px;
 }
 
 #loadingBar{
@@ -85,6 +86,12 @@ height:100%;
 background:linear-gradient(90deg,#00f5ff,#7c4dff,#00f5ff);
 background-size:200% 100%;
 box-shadow:0 0 15px #00f5ff;
+animation:shine 1.5s linear infinite;
+}
+
+@keyframes shine{
+0%{background-position:0%;}
+100%{background-position:200%;}
 }
 
 /* ===== INTRO ===== */
@@ -106,31 +113,7 @@ border-radius:12px;
 box-shadow:0 0 20px cyan;
 }
 
-/* ===== ROBOTIC TRANSITION ===== */
-#transitionOverlay{
-position:fixed;
-inset:0;
-background:radial-gradient(circle,rgba(0,245,255,0.2),transparent 60%);
-backdrop-filter:blur(8px);
-opacity:0;
-pointer-events:none;
-z-index:9999;
-transition:0.3s;
-}
-
-#transitionOverlay.active{
-opacity:1;
-animation:scan 0.6s ease;
-}
-
-@keyframes scan{
-0%{transform:scale(1);filter:brightness(1);}
-30%{transform:scale(1.02);filter:brightness(2);}
-60%{transform:scale(1);filter:brightness(1.2);}
-100%{transform:scale(1);filter:brightness(1);}
-}
-
-/* ===== HEADER (UNCHANGED) ===== */
+/* ===== HEADER ===== */
 header{
 display:flex;
 justify-content:space-between;
@@ -184,7 +167,7 @@ box-shadow:0 0 15px #00f5ff;
 transform:scale(1.05);
 }
 
-/* ===== PAGE SYSTEM (UNCHANGED) ===== */
+/* ===== PAGES ===== */
 main{
 flex:1;
 position:relative;
@@ -196,18 +179,13 @@ display:none;
 padding:30px;
 max-width:900px;
 margin:auto;
-opacity:0;
-transform:scale(0.98);
-transition:0.35s ease;
 }
 
 .page.active{
 display:block;
-opacity:1;
-transform:scale(1);
 }
 
-/* ===== CARD (UNCHANGED) ===== */
+/* ===== CARD ===== */
 .card{
 background:rgba(10,15,30,0.6);
 padding:20px;
@@ -220,7 +198,7 @@ backdrop-filter:blur(14px);
 text-shadow:0 0 10px rgba(0,245,255,0.6);
 }
 
-/* ===== WORKERS (UNCHANGED) ===== */
+/* ===== WORKERS ===== */
 .workerBtns button{
 margin:5px;
 padding:6px 12px;
@@ -240,7 +218,7 @@ margin-top:15px;
 display:block;
 }
 
-/* ===== FOOTER (UNCHANGED) ===== */
+/* ===== FOOTER ===== */
 footer{
 text-align:center;
 padding:20px;
@@ -254,6 +232,30 @@ inset:0;
 z-index:0;
 }
 
+/* ===== 🤖 ROBOTIC TRANSITION (NEW ONLY) ===== */
+#transitionOverlay{
+position:fixed;
+inset:0;
+background:radial-gradient(circle at center,rgba(0,245,255,0.15),transparent 60%);
+backdrop-filter:blur(6px);
+opacity:0;
+pointer-events:none;
+z-index:9999;
+transition:0.3s;
+}
+
+#transitionOverlay.active{
+opacity:1;
+animation:scan 0.6s ease;
+}
+
+@keyframes scan{
+0%{transform:scale(1);filter:brightness(1);}
+25%{transform:scale(1.02);filter:brightness(2);}
+50%{transform:scale(1);filter:brightness(1.2);}
+100%{transform:scale(1);filter:brightness(1);}
+}
+
 </style>
 </head>
 
@@ -261,22 +263,19 @@ z-index:0;
 
 <canvas id="particles"></canvas>
 
-<audio id="introSound" src="intro.mp3"></audio>
-<audio id="robotSound" src="robot.mp3"></audio>
-
-<!-- LOADING -->
 <div id="loadingScreen">
 <div id="bootTerminal"></div>
+
 <div id="loadingBarBox">
 <div id="loadingBar"></div>
 </div>
 </div>
 
-<!-- INTRO -->
 <div id="introScreen">
 <video id="introVideo" autoplay muted playsinline>
 <source src="intro.mp4" type="video/mp4">
 </video>
+<audio id="introSound" src="intro.mp3"></audio>
 </div>
 
 <header>
@@ -294,7 +293,7 @@ z-index:0;
 </nav>
 </header>
 
-<!-- ROBOT TRANSITION -->
+<!-- 🤖 OVERLAY -->
 <div id="transitionOverlay"></div>
 
 <main>
@@ -306,7 +305,10 @@ z-index:0;
 <div id="games" class="page">
 <div class="card">
 <h2 class="glow">New Games from ROY GAMES</h2>
-<p class="glow">New Games coming soon 🚀</p>
+<p class="glow">
+New Games from ROY GAMES will come soon!  
+(1 Game Currently Under Development 🚀)
+</p>
 </div>
 </div>
 
@@ -339,33 +341,46 @@ Aarav Roy is the Founder and President of ROY GAMES. He leads the company’s cr
 <button onclick="showWorker('manager')">Interview Manager</button>
 </div>
 
-<div id="intern" class="workerSection"><p class="glow">Intern Team</p></div>
-<div id="dev" class="workerSection"><p class="glow">Developers Team</p></div>
-<div id="manager" class="workerSection"><p class="glow">Interview Manager</p></div>
+<div id="intern" class="workerSection">
+<p class="glow">Intern Team – Learning and assisting development.</p>
+</div>
+
+<div id="dev" class="workerSection">
+<p class="glow">Developers – Core game creation team.</p>
+</div>
+
+<div id="manager" class="workerSection">
+<p class="glow">Intern Interview Manager – Recruitment and selection lead.</p>
+</div>
 
 </div>
 </div>
 
 </main>
 
-<footer>© 2026 ROY GAMES. All rights reserved.</footer>
+<footer>
+© 2026 ROY GAMES. All rights reserved.
+</footer>
 
 <script>
 
-/* PAGE SWITCH + ROBOT TRANSITION */
+/* PAGE SWITCH (UPDATED WITH TRANSITION) */
 function showPage(id){
 
-let overlay=document.getElementById("transitionOverlay");
+const overlay=document.getElementById("transitionOverlay");
 overlay.classList.add("active");
 
+document.querySelectorAll(".page").forEach(p=>{
+p.classList.remove("active");
+});
+
 setTimeout(()=>{
-document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
 document.getElementById(id).classList.add("active");
 },200);
 
 setTimeout(()=>{
 overlay.classList.remove("active");
-},600);
+},500);
 }
 
 /* WORKERS */
@@ -374,13 +389,30 @@ document.querySelectorAll(".workerSection").forEach(s=>s.classList.remove("activ
 document.getElementById(id).classList.add("active");
 }
 
-/* BOOT */
+/* LOADING */
+let bar=document.getElementById("loadingBar");
+let progress=0;
+
+let load=setInterval(()=>{
+progress++;
+bar.style.width=progress+"%";
+if(progress>=100){
+clearInterval(load);
+document.getElementById("loadingScreen").style.display="none";
+startIntro();
+}
+},60);
+
+/* BOOT TEXT */
 const lines=[
-"[AI CORE] Booting system...",
-"[OK] Memory loaded",
-"[OK] Graphics online",
-"[OK] Security active",
+"[AI CORE] Initializing system...",
+"[OK] Memory modules loaded",
+"[OK] Graphics engine online",
+"[OK] Audio system synced",
+"[OK] Security layer active",
+"[AI] Scanning environment...",
 "[AI] ENTERING ROY GAMES",
+"[OK] Connection established",
 "[READY] WELCOME BACK SIR"
 ];
 
@@ -391,35 +423,14 @@ function typeBoot(){
 if(i<lines.length){
 boot.innerHTML+=lines[i]+"\n";
 i++;
-setTimeout(typeBoot,500);
+setTimeout(typeBoot,600);
 }
 }
+
 typeBoot();
-
-/* LOADING */
-let bar=document.getElementById("loadingBar");
-let progress=0;
-
-let load=setInterval(()=>{
-
-progress++;
-bar.style.width=progress+"%";
-
-if(progress===5){
-document.getElementById("robotSound").play().catch(()=>{});
-}
-
-if(progress>=100){
-clearInterval(load);
-document.getElementById("loadingScreen").style.display="none";
-startIntro();
-}
-
-},55);
 
 /* INTRO */
 function startIntro(){
-
 let intro=document.getElementById("introScreen");
 let video=document.getElementById("introVideo");
 let audio=document.getElementById("introSound");
@@ -433,7 +444,6 @@ setTimeout(()=>{
 intro.style.display="none";
 showPage("home");
 },6000);
-
 }
 
 /* PARTICLES */
@@ -447,25 +457,28 @@ canvas.height=window.innerHeight;
 resize();
 window.addEventListener("resize",resize);
 
-let dots=[];
+let particles=[];
 for(let i=0;i<60;i++){
-dots.push({
+particles.push({
 x:Math.random()*canvas.width,
 y:Math.random()*canvas.height,
-dx:(Math.random()-0.5),
-dy:(Math.random()-0.5)
+r:Math.random()*2+1,
+dx:(Math.random()-0.5)*0.5,
+dy:(Math.random()-0.5)*0.5
 });
 }
 
 function animate(){
 ctx.clearRect(0,0,canvas.width,canvas.height);
-for(let d of dots){
-d.x+=d.dx;
-d.y+=d.dy;
-if(d.x<0||d.x>canvas.width)d.dx*=-1;
-if(d.y<0||d.y>canvas.height)d.dy*=-1;
-ctx.fillStyle="#00f5ff";
-ctx.fillRect(d.x,d.y,2,2);
+for(let p of particles){
+p.x+=p.dx;
+p.y+=p.dy;
+if(p.x<0||p.x>canvas.width)p.dx*=-1;
+if(p.y<0||p.y>canvas.height)p.dy*=-1;
+ctx.beginPath();
+ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+ctx.fillStyle="rgba(0,245,255,0.6)";
+ctx.fill();
 }
 requestAnimationFrame(animate);
 }
