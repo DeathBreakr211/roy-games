@@ -133,9 +133,12 @@ animation:float 3s ease-in-out infinite;
 display:flex;
 align-items:center;
 gap:10px;
+animation:float 3s ease-in-out infinite;
 }
 
-.logoBox img{height:45px;}
+.logoBox img{
+height:45px;
+}
 
 .logoText{
 font-size:22px;
@@ -183,6 +186,18 @@ margin:auto;
 
 .page.active{
 display:block;
+animation:fadePage 0.5s ease;
+}
+
+@keyframes fadePage{
+from{
+opacity:0;
+transform:translateY(15px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
 }
 
 /* ===== CARD ===== */
@@ -192,10 +207,12 @@ padding:20px;
 border-radius:16px;
 border:1px solid rgba(0,245,255,0.2);
 backdrop-filter:blur(14px);
+margin-bottom:20px;
 }
 
 .glow{
 text-shadow:0 0 10px rgba(0,245,255,0.6);
+line-height:1.7;
 }
 
 /* ===== WORKERS ===== */
@@ -207,15 +224,25 @@ border:1px solid violet;
 background:#111;
 color:violet;
 cursor:pointer;
+transition:0.3s;
+}
+
+.workerBtns button:hover{
+box-shadow:0 0 12px violet;
 }
 
 .workerSection{
 display:none;
 margin-top:15px;
+opacity:0;
+transform:translateY(10px);
+transition:0.4s;
 }
 
 .workerSection.active{
 display:block;
+opacity:1;
+transform:translateY(0);
 }
 
 /* ===== FOOTER ===== */
@@ -232,7 +259,7 @@ inset:0;
 z-index:0;
 }
 
-/* ===== 🤖 ROBOTIC TRANSITION (NEW ONLY) ===== */
+/* ===== ROBOTIC TRANSITION ===== */
 #transitionOverlay{
 position:fixed;
 inset:0;
@@ -256,6 +283,24 @@ animation:scan 0.6s ease;
 100%{transform:scale(1);filter:brightness(1);}
 }
 
+/* ===== MOBILE ===== */
+@media(max-width:600px){
+
+header{
+flex-direction:column;
+text-align:center;
+}
+
+nav{
+justify-content:center;
+}
+
+#introScreen video{
+width:95vw;
+}
+
+}
+
 </style>
 </head>
 
@@ -263,144 +308,391 @@ animation:scan 0.6s ease;
 
 <canvas id="particles"></canvas>
 
+<!-- CLICK SOUND -->
+<audio id="clickSound" src="click.mp3"></audio>
+
+<!-- LOADING -->
 <div id="loadingScreen">
+
 <div id="bootTerminal"></div>
 
 <div id="loadingBarBox">
 <div id="loadingBar"></div>
 </div>
+
 </div>
 
+<!-- INTRO -->
 <div id="introScreen">
+
 <video id="introVideo" autoplay muted playsinline>
 <source src="intro.mp4" type="video/mp4">
 </video>
+
 <audio id="introSound" src="intro.mp3"></audio>
+
 </div>
 
+<!-- HEADER -->
 <header>
+
 <div class="logoBox">
 <img src="logo.png">
 <span class="logoText">ROY GAMES</span>
 </div>
 
 <nav>
+
 <button onclick="showPage('home')">Home</button>
+
 <button onclick="showPage('games')">Games</button>
+
 <button onclick="showPage('about')">About</button>
+
 <button onclick="showPage('president')">President</button>
+
 <button onclick="showPage('workers')">Workers</button>
+
+<button onclick="showPage('book')">Book Website</button>
+
 </nav>
+
 </header>
 
-<!-- 🤖 OVERLAY -->
+<!-- TRANSITION -->
 <div id="transitionOverlay"></div>
 
+<!-- MAIN -->
 <main>
 
+<!-- HOME -->
 <div id="home" class="page active">
-<h1 class="glow">Welcome to ROY GAMES</h1>
+
+<h1 class="glow">
+Welcome to ROY GAMES
+</h1>
+
+<p class="glow">
+Creating immersive and next-generation gaming experiences.
+</p>
+
 </div>
 
+<!-- GAMES -->
 <div id="games" class="page">
+
 <div class="card">
-<h2 class="glow">New Games from ROY GAMES</h2>
+
+<h2 class="glow">
+New Games from ROY GAMES
+</h2>
+
 <p class="glow">
 New Games from ROY GAMES will come soon!  
 (1 Game Currently Under Development 🚀)
 </p>
-</div>
+
 </div>
 
+</div>
+
+<!-- ABOUT -->
 <div id="about" class="page">
+
 <div class="card">
-<h2 class="glow">About ROY GAMES</h2>
+
+<h2 class="glow">
+About ROY GAMES
+</h2>
+
 <p class="glow">
-ROY GAMES is an innovative and visionary game development company dedicated to crafting immersive digital worlds and powerful interactive experiences. The company focuses on blending creativity, advanced technology, and strong storytelling to deliver unforgettable gameplay. Every project is carefully designed with attention to detail, smooth performance, and modern design standards. ROY GAMES aims to push boundaries in the gaming industry while building a strong and passionate gaming community worldwide.
+
+ROY GAMES is an innovative and visionary game development company dedicated to crafting immersive digital worlds and powerful interactive experiences.
+
+The company focuses on blending creativity, advanced technology, and strong storytelling to deliver unforgettable gameplay experiences for players around the world.
+
+Every project is carefully designed with cinematic visuals, smooth gameplay systems, futuristic interfaces, and modern development standards.
+
+ROY GAMES continues building toward a future where creativity and technology combine to create extraordinary adventures for the gaming community.
+
 </p>
-</div>
+
 </div>
 
+</div>
+
+<!-- PRESIDENT -->
 <div id="president" class="page">
+
 <div class="card">
-<h2 class="glow">President</h2>
+
+<h2 class="glow">
+President
+</h2>
+
 <p class="glow">
-Aarav Roy is the Founder and President of ROY GAMES. He leads the company’s creative direction, innovation strategy, and long-term development goals. With a strong passion for technology and interactive design, he ensures that every project represents excellence, originality, and immersive gameplay. His leadership drives the company toward growth, creativity, and global recognition in the gaming industry.
+
+Aarav Roy is the Founder and President of ROY GAMES.
+
+He leads the company’s creative direction, innovation strategy, and long-term development goals while ensuring every project reflects excellence and originality.
+
+With a strong passion for technology, futuristic experiences, and game development, his leadership continues driving ROY GAMES toward growth, creativity, and international recognition in the gaming industry.
+
 </p>
-</div>
+
 </div>
 
+</div>
+
+<!-- WORKERS -->
 <div id="workers" class="page">
+
 <div class="card">
 
-<h2 class="glow">Workers</h2>
+<h2 class="glow">
+Workers
+</h2>
 
 <div class="workerBtns">
-<button onclick="showWorker('intern')">Intern</button>
-<button onclick="showWorker('dev')">Developers</button>
-<button onclick="showWorker('manager')">Interview Manager</button>
+
+<button onclick="showWorker('intern')">
+Intern
+</button>
+
+<button onclick="showWorker('dev')">
+Developers
+</button>
+
+<button onclick="showWorker('manager')">
+Interview Manager
+</button>
+
 </div>
 
 <div id="intern" class="workerSection">
-<p class="glow">Intern Team – Learning and assisting development.</p>
+<p class="glow">
+Intern Team – Learning and assisting development.
+</p>
 </div>
 
 <div id="dev" class="workerSection">
-<p class="glow">Developers – Core game creation team.</p>
+<p class="glow">
+Developers – Core game creation team.
+</p>
 </div>
 
 <div id="manager" class="workerSection">
-<p class="glow">Intern Interview Manager – Recruitment and selection lead.</p>
+<p class="glow">
+Intern Interview Manager – Recruitment and selection lead.
+</p>
 </div>
 
 </div>
+
+</div>
+
+<!-- BOOK WEBSITE -->
+<div id="book" class="page">
+
+<div class="card">
+
+<h2 class="glow">
+Book a Website
+</h2>
+
+<p class="glow">
+Choose a professional website package from ROY GAMES.
+</p>
+
+</div>
+
+<div class="card">
+
+<h2 class="glow">
+Simple Plan • ₹25,000
+</h2>
+
+<p class="glow">
+
+Perfect for portfolios, local businesses, personal brands, and startup identity websites.
+
+<br><br>
+
+• Responsive Design  
+<br>
+• Mobile Friendly Layout  
+<br>
+• Contact System  
+<br>
+• Modern UI Design  
+<br>
+• Fast Performance  
+
+</p>
+
+</div>
+
+<div class="card">
+
+<h2 class="glow">
+Dynamic Growth Plan • ₹45,000 - ₹50,000
+</h2>
+
+<p class="glow">
+
+Designed for businesses that want online growth, customer interaction, leads, and advanced features.
+
+<br><br>
+
+• Dynamic Pages  
+<br>
+• Business Growth UI  
+<br>
+• Modern Animations  
+<br>
+• Interactive Design  
+<br>
+• Scalable Systems  
+
+</p>
+
+</div>
+
+<div class="card">
+
+<h2 class="glow">
+Premium 3D Experience • ₹84,000
+</h2>
+
+<p class="glow">
+
+Built for brands that want futuristic and premium international-standard experiences.
+
+<br><br>
+
+• Cinematic Design  
+<br>
+• Futuristic UI/UX  
+<br>
+• Premium Animations  
+<br>
+• High-End Interactive Experience  
+<br>
+• Advanced Visual Systems  
+
+</p>
+
+</div>
+
+<div class="card">
+
+<h2 class="glow">
+Payment Information
+</h2>
+
+<p class="glow">
+
+Payment Method: Courier / Direct Company Payment
+
+<br><br>
+
+📧 shadowplayzxd434@gmail.com
+
+<br><br>
+
+After booking confirmation, the ROY GAMES team will contact you directly.
+
+</p>
+
+</div>
+
 </div>
 
 </main>
 
+<!-- FOOTER -->
 <footer>
 © 2026 ROY GAMES. All rights reserved.
 </footer>
 
 <script>
 
-/* PAGE SWITCH (UPDATED WITH TRANSITION) */
+/* CLICK SOUND */
+document.querySelectorAll("button").forEach(btn=>{
+
+btn.addEventListener("click",function(){
+
+let sound=document.getElementById("clickSound");
+
+sound.currentTime=0;
+
+sound.play();
+
+});
+
+});
+
+/* PAGE SWITCH */
 function showPage(id){
 
 const overlay=document.getElementById("transitionOverlay");
+
 overlay.classList.add("active");
 
 document.querySelectorAll(".page").forEach(p=>{
+
 p.classList.remove("active");
+
 });
 
 setTimeout(()=>{
+
 document.getElementById(id).classList.add("active");
+
 },200);
 
 setTimeout(()=>{
+
 overlay.classList.remove("active");
+
 },500);
+
 }
 
 /* WORKERS */
 function showWorker(id){
-document.querySelectorAll(".workerSection").forEach(s=>s.classList.remove("active"));
+
+document.querySelectorAll(".workerSection").forEach(s=>{
+
+s.classList.remove("active");
+
+});
+
 document.getElementById(id).classList.add("active");
+
 }
 
 /* LOADING */
 let bar=document.getElementById("loadingBar");
+
 let progress=0;
 
 let load=setInterval(()=>{
+
 progress++;
+
 bar.style.width=progress+"%";
+
 if(progress>=100){
+
 clearInterval(load);
+
 document.getElementById("loadingScreen").style.display="none";
+
 startIntro();
+
 }
+
 },60);
 
 /* BOOT TEXT */
@@ -417,71 +709,109 @@ const lines=[
 ];
 
 let i=0;
+
 let boot=document.getElementById("bootTerminal");
 
 function typeBoot(){
+
 if(i<lines.length){
+
 boot.innerHTML+=lines[i]+"\n";
+
 i++;
+
 setTimeout(typeBoot,600);
+
 }
+
 }
 
 typeBoot();
 
 /* INTRO */
 function startIntro(){
+
 let intro=document.getElementById("introScreen");
+
 let video=document.getElementById("introVideo");
+
 let audio=document.getElementById("introSound");
 
 intro.style.display="flex";
 
 video.play().catch(()=>{});
+
 audio.play().catch(()=>{});
 
 setTimeout(()=>{
+
 intro.style.display="none";
+
 showPage("home");
+
 },6000);
+
 }
 
 /* PARTICLES */
 const canvas=document.getElementById("particles");
+
 const ctx=canvas.getContext("2d");
 
 function resize(){
+
 canvas.width=window.innerWidth;
+
 canvas.height=window.innerHeight;
+
 }
+
 resize();
+
 window.addEventListener("resize",resize);
 
 let particles=[];
+
 for(let i=0;i<60;i++){
+
 particles.push({
+
 x:Math.random()*canvas.width,
 y:Math.random()*canvas.height,
 r:Math.random()*2+1,
 dx:(Math.random()-0.5)*0.5,
 dy:(Math.random()-0.5)*0.5
+
 });
+
 }
 
 function animate(){
+
 ctx.clearRect(0,0,canvas.width,canvas.height);
+
 for(let p of particles){
+
 p.x+=p.dx;
 p.y+=p.dy;
+
 if(p.x<0||p.x>canvas.width)p.dx*=-1;
 if(p.y<0||p.y>canvas.height)p.dy*=-1;
+
 ctx.beginPath();
+
 ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+
 ctx.fillStyle="rgba(0,245,255,0.6)";
+
 ctx.fill();
+
 }
+
 requestAnimationFrame(animate);
+
 }
+
 animate();
 
 </script>
