@@ -2,14 +2,17 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>ROY GAMES</title>
+
+<link rel="icon" type="image/png" href="logo.png">
 
 <style>
 
 /* ===== BASE ===== */
 body{
 margin:0;
-font-family:Arial, sans-serif;
+font-family:Arial,sans-serif;
 color:#e6f7ff;
 overflow-x:hidden;
 min-height:100vh;
@@ -245,6 +248,24 @@ opacity:1;
 transform:translateY(0);
 }
 
+/* ===== DEMO BUTTON ===== */
+.demoBtn{
+margin-top:10px;
+padding:10px 18px;
+border:none;
+border-radius:15px;
+background:#00f5ff;
+color:black;
+cursor:pointer;
+font-weight:bold;
+transition:0.3s;
+}
+
+.demoBtn:hover{
+transform:scale(1.05);
+box-shadow:0 0 15px #00f5ff;
+}
+
 /* ===== FOOTER ===== */
 footer{
 text-align:center;
@@ -259,7 +280,7 @@ inset:0;
 z-index:0;
 }
 
-/* ===== ROBOTIC TRANSITION ===== */
+/* ===== TRANSITION ===== */
 #transitionOverlay{
 position:fixed;
 inset:0;
@@ -277,10 +298,10 @@ animation:scan 0.6s ease;
 }
 
 @keyframes scan{
-0%{transform:scale(1);filter:brightness(1);}
-25%{transform:scale(1.02);filter:brightness(2);}
-50%{transform:scale(1);filter:brightness(1.2);}
-100%{transform:scale(1);filter:brightness(1);}
+0%{transform:scale(1);}
+25%{transform:scale(1.02);}
+50%{transform:scale(1);}
+100%{transform:scale(1);}
 }
 
 /* ===== MOBILE ===== */
@@ -344,33 +365,24 @@ width:95vw;
 <nav>
 
 <button onclick="showPage('home')">Home</button>
-
 <button onclick="showPage('games')">Games</button>
-
 <button onclick="showPage('about')">About</button>
-
 <button onclick="showPage('president')">President</button>
-
 <button onclick="showPage('workers')">Workers</button>
-
 <button onclick="showPage('book')">Book Website</button>
 
 </nav>
 
 </header>
 
-<!-- TRANSITION -->
 <div id="transitionOverlay"></div>
 
-<!-- MAIN -->
 <main>
 
 <!-- HOME -->
 <div id="home" class="page active">
 
-<h1 class="glow">
-Welcome to ROY GAMES
-</h1>
+<h1 class="glow">Welcome to ROY GAMES</h1>
 
 <p class="glow">
 Creating immersive and next-generation gaming experiences.
@@ -383,12 +395,11 @@ Creating immersive and next-generation gaming experiences.
 
 <div class="card">
 
-<h2 class="glow">
-New Games from ROY GAMES
-</h2>
+<h2 class="glow">New Games from ROY GAMES</h2>
 
 <p class="glow">
-New Games from ROY GAMES will come soon!  
+New Games from ROY GAMES will come soon!
+<br><br>
 (1 Game Currently Under Development 🚀)
 </p>
 
@@ -401,19 +412,19 @@ New Games from ROY GAMES will come soon!
 
 <div class="card">
 
-<h2 class="glow">
-About ROY GAMES
-</h2>
+<h2 class="glow">About ROY GAMES</h2>
 
 <p class="glow">
 
 ROY GAMES is an innovative and visionary game development company dedicated to crafting immersive digital worlds and powerful interactive experiences.
 
+<br><br>
+
 The company focuses on blending creativity, advanced technology, and strong storytelling to deliver unforgettable gameplay experiences for players around the world.
 
-Every project is carefully designed with cinematic visuals, smooth gameplay systems, futuristic interfaces, and modern development standards.
+<br><br>
 
-ROY GAMES continues building toward a future where creativity and technology combine to create extraordinary adventures for the gaming community.
+Every project is carefully designed with cinematic visuals, smooth gameplay systems, futuristic interfaces, and modern development standards.
 
 </p>
 
@@ -426,17 +437,15 @@ ROY GAMES continues building toward a future where creativity and technology com
 
 <div class="card">
 
-<h2 class="glow">
-President
-</h2>
+<h2 class="glow">President</h2>
 
 <p class="glow">
 
 Aarav Roy is the Founder and President of ROY GAMES.
 
-He leads the company’s creative direction, innovation strategy, and long-term development goals while ensuring every project reflects excellence and originality.
+<br><br>
 
-With a strong passion for technology, futuristic experiences, and game development, his leadership continues driving ROY GAMES toward growth, creativity, and international recognition in the gaming industry.
+He leads the company’s creative direction, innovation strategy, and long-term development goals while ensuring every project reflects excellence and originality.
 
 </p>
 
@@ -449,23 +458,15 @@ With a strong passion for technology, futuristic experiences, and game developme
 
 <div class="card">
 
-<h2 class="glow">
-Workers
-</h2>
+<h2 class="glow">Workers</h2>
 
 <div class="workerBtns">
 
-<button onclick="showWorker('intern')">
-Intern
-</button>
+<button onclick="showWorker('intern')">Intern</button>
 
-<button onclick="showWorker('dev')">
-Developers
-</button>
+<button onclick="showWorker('dev')">Developers</button>
 
-<button onclick="showWorker('manager')">
-Interview Manager
-</button>
+<button onclick="showWorker('manager')">Interview Manager</button>
 
 </div>
 
@@ -513,21 +514,7 @@ Simple Plan • ₹25,000
 </h2>
 
 <p class="glow">
-
-Perfect for portfolios, local businesses, personal brands, and startup identity websites.
-
-<br><br>
-
-• Responsive Design  
-<br>
-• Mobile Friendly Layout  
-<br>
-• Contact System  
-<br>
-• Modern UI Design  
-<br>
-• Fast Performance  
-
+Perfect for portfolios, local businesses, and startup identities.
 </p>
 
 </div>
@@ -539,21 +526,7 @@ Dynamic Growth Plan • ₹45,000 - ₹50,000
 </h2>
 
 <p class="glow">
-
-Designed for businesses that want online growth, customer interaction, leads, and advanced features.
-
-<br><br>
-
-• Dynamic Pages  
-<br>
-• Business Growth UI  
-<br>
-• Modern Animations  
-<br>
-• Interactive Design  
-<br>
-• Scalable Systems  
-
+Designed for businesses that want online growth and customer engagement.
 </p>
 
 </div>
@@ -565,22 +538,58 @@ Premium 3D Experience • ₹84,000
 </h2>
 
 <p class="glow">
-
-Built for brands that want futuristic and premium international-standard experiences.
-
-<br><br>
-
-• Cinematic Design  
-<br>
-• Futuristic UI/UX  
-<br>
-• Premium Animations  
-<br>
-• High-End Interactive Experience  
-<br>
-• Advanced Visual Systems  
-
+Built for futuristic international-standard experiences.
 </p>
+
+</div>
+
+<!-- DEMOS -->
+
+<div class="card">
+
+<h2 class="glow">
+1. Portfolio / Local Shop Demo
+</h2>
+
+<p class="glow">
+Clean modern website for creators and local shops.
+</p>
+
+<button class="demoBtn" onclick="window.open('https://example.com')">
+View Demo
+</button>
+
+</div>
+
+<div class="card">
+
+<h2 class="glow">
+2. Dynamic Business Demo
+</h2>
+
+<p class="glow">
+Advanced business website focused on growth and engagement.
+</p>
+
+<button class="demoBtn" onclick="window.open('https://example.com')">
+View Demo
+</button>
+
+</div>
+
+<div class="card">
+
+<h2 class="glow">
+3. Premium 3D Demo
+</h2>
+
+<p class="glow">
+Futuristic premium experience for gaming and tech brands.
+</p>
+
+<button class="demoBtn" onclick="window.open('https://example.com')">
+View Demo
+</button>
 
 </div>
 
@@ -592,11 +601,7 @@ Payment Information
 
 <p class="glow">
 
-Payment Method: Courier / Direct Company Payment
-
-<br><br>
-
-📧 shadowplayzxd434@gmail.com
+📧 roygames202673@gmail.com
 
 <br><br>
 
@@ -610,7 +615,6 @@ After booking confirmation, the ROY GAMES team will contact you directly.
 
 </main>
 
-<!-- FOOTER -->
 <footer>
 © 2026 ROY GAMES. All rights reserved.
 </footer>
@@ -640,21 +644,15 @@ const overlay=document.getElementById("transitionOverlay");
 overlay.classList.add("active");
 
 document.querySelectorAll(".page").forEach(p=>{
-
 p.classList.remove("active");
-
 });
 
 setTimeout(()=>{
-
 document.getElementById(id).classList.add("active");
-
 },200);
 
 setTimeout(()=>{
-
 overlay.classList.remove("active");
-
 },500);
 
 }
@@ -663,9 +661,7 @@ overlay.classList.remove("active");
 function showWorker(id){
 
 document.querySelectorAll(".workerSection").forEach(s=>{
-
 s.classList.remove("active");
-
 });
 
 document.getElementById(id).classList.add("active");
@@ -702,10 +698,8 @@ const lines=[
 "[OK] Graphics engine online",
 "[OK] Audio system synced",
 "[OK] Security layer active",
-"[AI] Scanning environment...",
 "[AI] ENTERING ROY GAMES",
-"[OK] Connection established",
-"[READY] WELCOME BACK SIR"
+"[READY] WELCOME BACK"
 ];
 
 let i=0;
