@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roy Games | Portfolio</title>
+    <style>
+        /* CSS Reset & Variable Definitions */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Psychological Color Palette Selection:
+           - Background: #0B0F19 (Deep Charcoal Slate) -> Evokes authority & precision.
+           - Accent/Highlights: #6366F1 (Indigo Blue) -> Inspires innovation & high trust.
+           - Card Background: #1E293B (Deep Slate Grey) -> Gives a premium, organized feel.
+        */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #0B0F19;
+            color: #E2E8F0;
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Profile/Header Section */
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .avatar-placeholder {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #6366F1, #38BDF8);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: bold;
+            color: #ffffff;
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            color: #ffffff;
+            margin-bottom: 8px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #38BDF8;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+
+        .bio {
+            max-width: 600px;
+            margin: 0 auto;
+            color: #94A3B8;
+            font-size: 1rem;
+        }
+
+        /* Section Styling */
+        section {
+            margin-bottom: 45px;
+        }
+
+        h2 {
+            font-size: 1.4rem;
+            color: #ffffff;
+            margin-bottom: 20px;
+            display: inline-block;
+            position: relative;
+            padding-bottom: 5px;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 35px;
+            height: 3px;
+            background-color: #6366F1;
+            border-radius: 2px;
+        }
+
+        /* Projects Layout */
+        .project-card {
+            background-color: #1E293B;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            transition: border-color 0.3s ease;
+        }
+
+        .project-card:hover {
+            border-color: #6366F1;
+        }
+
+        .project-title {
+            font-size: 1.2rem;
+            color: #ffffff;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .project-desc {
+            color: #94A3B8;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+        }
+
+        /* Tags/Badges */
+        .tag-container {
+            display: block;
+        }
+
+        .tag {
+            display: inline-block;
+            background-color: rgba(99, 102, 241, 0.15);
+            color: #818CF8;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+
+        /* Contact Button */
+        .contact-btn {
+            display: inline-block;
+            background-color: #6366F1;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-top: 10px;
+            box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4);
+            transition: background-color 0.2s;
+        }
+
+        .contact-btn:hover {
+            background-color: #4F46E5;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            font-size: 0.85rem;
+            color: #475569;
+            border-top: 1px solid #1E293B;
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="avatar-placeholder">RG</div>
+            <h1>Roy Games</h1>
+            <div class="subtitle">Game Development & Creative Design Studio</div>
+            <p class="bio">Creating immersive experiences, modern interactive storytelling, and high-performance software architectures.</p>
+        </header>
+
+        <section>
+            <h2>About</h2>
+            <div class="project-card" style="margin-bottom: 0;">
+                <p style="color: #94A3B8;">Focused on pushing the boundaries of interactive media using robust systems engineering and cutting-edge game mechanics. Dedicated to building engaging worlds with optimized performance and sleek visual presentation.</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Featured Projects</h2>
+            
+            <div class="project-card">
+                <div class="project-title">World of Bharat</div>
+                <div class="project-desc">An ambitious, narrative-driven game project featuring deeply structured character systems and immersive environmental design. Built with optimal scripting and high architectural precision.</div>
+                <div class="tag-container">
+                    <span class="tag">Game Design</span>
+                    <span class="tag">C++ Scripting</span>
+                    <span class="tag">Systems Architecture</span>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-title">Interactive Mechanics Framework</div>
+                <div class="project-desc">A high-performance codebase designed for physics processing, structural modular components, and fluid gameplay logic control.</div>
+                <div class="tag-container">
+                    <span class="tag">C++ / Object-Oriented</span>
+                    <span class="tag">Math & Physics</span>
+                    <span class="tag">Optimization</span>
+                </div>
+            </div>
+        </section>
+
+        <section style="text-align: center;">
+            <h2>Get In Touch</h2>
+            <p style="color: #94A3B8; margin-bottom: 15px;">Interested in collaboration, professional services, or technical asset development?</p>
+            <a href="mailto:contact@roygames.com" class="contact-btn">Send an Email</a>
+        </section>
+
+        <footer>
+            &copy; 2026 Roy Games. All rights reserved. Designed with precision.
+        </footer>
+    </div>
+
+</body>
+</html>

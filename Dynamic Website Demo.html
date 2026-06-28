@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roy Games - Official Premium Store</title>
+    <style>
+        /* CSS Reset & Global Layout */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #0F172A;
+            color: #F8FAFC;
+            line-height: 1.5;
+            padding: 30px 15px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 1px solid #334155;
+            padding-bottom: 25px;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+            margin-bottom: 5px;
+        }
+
+        .logo span {
+            color: #10B981;
+        }
+
+        .tagline {
+            font-size: 1rem;
+            color: #94A3B8;
+        }
+
+        .marketplace-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .product-card {
+            background-color: #1E293B;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .product-card:hover {
+            border-color: #10B981;
+            transform: translateY(-2px);
+        }
+
+        /* Clickable Image Box with Hint Icon */
+        .product-image-container {
+            width: 100%;
+            height: 220px;
+            background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #475569;
+            cursor: pointer;
+        }
+
+        /* Subtle overlay to guide user that image is interactive */
+        .product-image-container::after {
+            content: "Click to Save Asset 📥";
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            background-color: rgba(15, 23, 42, 0.8);
+            color: #38BDF8;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: 4px;
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            transition: opacity 0.2s;
+        }
+
+        .product-image-container:hover::after {
+            background-color: #10B981;
+            color: #ffffff;
+            border-color: transparent;
+        }
+
+        .product-image-container svg {
+            width: 65%;
+            height: 65%;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover .product-image-container svg {
+            transform: scale(1.05);
+        }
+
+        /* Quantity Controller Section */
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #0F172A;
+            border: 1px solid #334155;
+            border-radius: 6px;
+            padding: 8px 12px;
+            margin-bottom: 15px;
+        }
+
+        .quantity-label {
+            font-size: 0.85rem;
+            color: #94A3B8;
+            font-weight: 600;
+        }
+
+        .qty-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .qty-input {
+            width: 35px;
+            background: transparent;
+            border: none;
+            color: #ffffff;
+            text-align: center;
+            font-size: 1rem;
+            font-weight: 700;
+            outline: none;
+        }
+
+        .qty-input::-webkit-outer-spin-button,
+        .qty-input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .qty-btn {
+            background-color: #334155;
+            border: none;
+            color: #ffffff;
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            user-select: none;
+            transition: background-color 0.15s;
+        }
+
+        .qty-btn:hover {
+            background-color: #10B981;
+        }
+
+        /* Product Content Details */
+        .product-info h3 {
+            font-size: 1.2rem;
+            color: #ffffff;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .product-desc {
+            font-size: 0.85rem;
+            color: #94A3B8;
+            margin-bottom: 15px;
+            min-height: 40px;
+        }
+
+        .price-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            border-top: 1px solid #334155;
+            padding-top: 12px;
+        }
+
+        .price {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #10B981;
+        }
+
+        .buy-now-btn {
+            background-color: #10B981;
+            color: #ffffff;
+            border: none;
+            width: 100%;
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: background-color 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+        }
+
+        .buy-now-btn:hover {
+            background-color: #059669;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+        }
+
+        .cart-status-bar {
+            background-color: #1E293B;
+            border: 2px dashed #10B981;
+            border-radius: 12px;
+            padding: 18px 24px;
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-title {
+            font-weight: 600;
+            font-size: 1.05rem;
+            color: #ffffff;
+        }
+
+        .cart-total {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #10B981;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 0.85rem;
+            color: #475569;
+            padding-top: 20px;
+            border-top: 1px solid #1E293B;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="logo">Roy Games <span>Store</span></div>
+            <div class="tagline">Premium Hardware, Official Apparel & Pro Gear Setup</div>
+        </header>
+
+        <main>
+            <div class="marketplace-grid">
+                
+                <div class="product-card">
+                    <div>
+                        <div class="product-image-container" id="container-laptop" onclick="triggerDownload('laptop')">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M20 4H4C2.89543 4 2 4.89543 2 6V16C2 17.1046 2.89543 18 4 18H20C21.1046 18 22 17.1046 22 16V6C22 4.89543 21.1046 4 20 4Z" stroke="#38BDF8" stroke-width="1.5" stroke-linejoin="round"/>
+                                <path d="M1 20H23" stroke="#38BDF8" stroke-width="1.5" stroke-linecap="round"/>
+                                <path d="M12 14H12.01" stroke="#10B981" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        
+                        <div class="quantity-control">
+                            <span class="quantity-label">Select Quantity</span>
+                            <div class="qty-actions">
+                                <button class="qty-btn" onclick="adjustQuantity('prod-laptop', -1, event)">-</button>
+                                <input type="number" id="prod-laptop" class="qty-input" value="1" min="1" onchange="validateInput(this)" onclick="event.stopPropagation()">
+                                <button class="qty-btn" onclick="adjustQuantity('prod-laptop', 1, event)">+</button>
+                            </div>
+                        </div>
+
+                        <div class="product-info">
+                            <h3>ROG Pro Gaming Laptop</h3>
+                            <p class="product-desc">Ultimate next-gen processing configuration with RGB mechanical keyboard for flawless execution.</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="price-row">
+                            <span class="price">₹1,45,000</span>
+                        </div>
+                        <button class="buy-now-btn" onclick="processAddToCart('ROG Pro Gaming Laptop', 145000, 'prod-laptop', event)">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div>
+                        <div class="product-image-container" id="container-jersey" onclick="triggerDownload('jersey')">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M6 3L3 6V9H6V21H18V9H21V6L18 3H6Z" stroke="#F43F5E" stroke-width="1.5" stroke-linejoin="round"/>
+                                <path d="M9 3C9 4.65685 10.3431 6 12 6C13.6569 6 15 4.65685 15 3" stroke="#F43F5E" stroke-width="1.5"/>
+                            </svg>
+                        </div>
+                        
+                        <div class="quantity-control">
+                            <span class="quantity-label">Select Quantity</span>
+                            <div class="qty-actions">
+                                <button class="qty-btn" onclick="adjustQuantity('prod-jersey', -1, event)">-</button>
+                                <input type="number" id="prod-jersey" class="qty-input" value="1" min="1" onchange="validateInput(this)" onclick="event.stopPropagation()">
+                                <button class="qty-btn" onclick="adjustQuantity('prod-jersey', 1, event)">+</button>
+                            </div>
+                        </div>
+
+                        <div class="product-info">
+                            <h3>"World of Bharat" Official Jersey</h3>
+                            <p class="product-desc">Premium moisture-wicking dry-fit designer e-sports apparel with sharp visual aesthetics.</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="price-row">
+                            <span class="price">₹1,299</span>
+                        </div>
+                        <button class="buy-now-btn" onclick="processAddToCart('World of Bharat Official Jersey', 1299, 'prod-jersey', event)">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div>
+                        <div class="product-image-container" id="container-chair" onclick="triggerDownload('chair')">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M7 3H17V13H7V3Z" stroke="#A855F7" stroke-width="1.5" stroke-linejoin="round"/>
+                                <path d="M5 13H19V16H5V13Z" stroke="#A855F7" stroke-width="1.5" stroke-linejoin="round"/>
+                                <path d="M12 16V20M12 20L9 22M12 20L15 22" stroke="#A855F7" stroke-width="1.5" stroke-linecap="round"/>
+                                <path d="M4 10V13M20 10V13" stroke="#A855F7" stroke-width="1.5" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        
+                        <div class="quantity-control">
+                            <span class="quantity-label">Select Quantity</span>
+                            <div class="qty-actions">
+                                <button class="qty-btn" onclick="adjustQuantity('prod-chair', -1, event)">-</button>
+                                <input type="number" id="prod-chair" class="qty-input" value="1" min="1" onchange="validateInput(this)" onclick="event.stopPropagation()">
+                                <button class="qty-btn" onclick="adjustQuantity('prod-chair', 1, event)">+</button>
+                            </div>
+                        </div>
+
+                        <div class="product-info">
+                            <h3>Ergonomic Pro Gaming Chair</h3>
+                            <p class="product-desc">High lumbar support with premium adjustable 4D armrests for long content-creation sessions.</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="price-row">
+                            <span class="price">₹18,500</span>
+                        </div>
+                        <button class="buy-now-btn" onclick="processAddToCart('Ergonomic Pro Gaming Chair', 18500, 'prod-chair', event)">Add to Cart</button>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="cart-status-bar">
+                <div class="cart-title">🛒 Cart Status: <span id="total-items-counter" style="color: #10B981; font-weight: bold;">0</span> items selected</div>
+                <div class="cart-total">Total Amount: <span id="total-price-counter">₹0</span></div>
+            </div>
+        </main>
+
+        <footer>
+            &copy; 2026 Roy Games Studio. Powered by Secure Conversion Psychology Architecture.
+        </footer>
+    </div>
+
+    <script>
+        let accumulatedItems = 0;
+        let accumulatedPrice = 0;
+
+        // Smart execution bridge to instantly trigger file download on image box click
+        function triggerDownload(productType) {
+            let svgElement = document.getElementById('container-' + productType).querySelector('svg');
+            let svgString = new XMLSerializer().serializeToString(svgElement);
+            let svgBlob = new Blob([svgString], {type: "image/svg+xml;charset=utf-8"});
+            
+            let downloadLink = document.createElement('a');
+            downloadLink.href = URL.createObjectURL(svgBlob);
+            downloadLink.download = "RoyGames_" + productType + "_Blueprint.svg";
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+        }
+
+        function adjustQuantity(inputId, changeValue, event) {
+            event.stopPropagation(); // Prevents download when clicking quantity buttons
+            const inputField = document.getElementById(inputId);
+            let currentVal = parseInt(inputField.value) || 1;
+            currentVal += changeValue;
+            if (currentVal < 1) currentVal = 1;
+            inputField.value = currentVal;
+        }
+
+        function validateInput(inputElement) {
+            let enteredVal = parseInt(inputElement.value);
+            if (isNaN(enteredVal) || enteredVal < 1) inputElement.value = 1;
+        }
+
+        function processAddToCart(itemName, ratePerUnit, inputId, event) {
+            event.stopPropagation(); // Prevents download when clicking buy button
+            const quantityField = document.getElementById(inputId);
+            const verifiedQty = parseInt(quantityField.value) || 1;
+            
+            accumulatedItems += verifiedQty;
+            accumulatedPrice += (ratePerUnit * verifiedQty);
+
+            document.getElementById('total-items-counter').innerText = accumulatedItems;
+            document.getElementById('total-price-counter').innerText = '₹' + accumulatedPrice.toLocaleString('en-IN');
+
+            alert('Successfully added ' + verifiedQty + 'x ' + itemName + ' to your cart!');
+        }
+    </script>
+</body>
+</html>

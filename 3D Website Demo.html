@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roy Games - Official 3D Experience Store</title>
+    <style>
+        /* Global CSS Styling & Dark Mode Aesthetics */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #0F172A;
+            color: #F8FAFC;
+            line-height: 1.5;
+            padding: 30px 15px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 1px solid #334155;
+            padding-bottom: 25px;
+        }
+
+        .logo {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+        }
+
+        .logo span {
+            color: #10B981;
+        }
+
+        .tagline {
+            font-size: 1rem;
+            color: #94A3B8;
+            margin-top: 5px;
+        }
+
+        .instruction-badge {
+            display: inline-block;
+            background-color: rgba(56, 189, 248, 0.1);
+            color: #38BDF8;
+            font-size: 0.85rem;
+            padding: 6px 12px;
+            border-radius: 20px;
+            margin-top: 15px;
+            border: 1px solid rgba(56, 189, 248, 0.2);
+        }
+
+        /* Responsive Grid System */
+        .marketplace-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .product-card {
+            background-color: #1E293B;
+            border: 1px solid #334155;
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: border-color 0.3s, transform 0.3s;
+            overflow: hidden;
+        }
+
+        .product-card:hover {
+            border-color: #10B981;
+            transform: translateY(-4px);
+        }
+
+        /* 3D WebGL Canvas Container */
+        .canvas-container {
+            width: 100%;
+            height: 240px;
+            background: radial-gradient(circle at center, #1E293B 0%, #090D16 100%);
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #475569;
+            cursor: grab;
+            position: relative;
+        }
+
+        .canvas-container:active {
+            cursor: grabbing;
+        }
+
+        /* Quantity Controllers */
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #0F172A;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            padding: 10px 14px;
+            margin-bottom: 15px;
+        }
+
+        .quantity-label {
+            font-size: 0.85rem;
+            color: #94A3B8;
+            font-weight: 600;
+        }
+
+        .qty-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .qty-input {
+            width: 35px;
+            background: transparent;
+            border: none;
+            color: #ffffff;
+            text-align: center;
+            font-size: 1rem;
+            font-weight: 700;
+            outline: none;
+        }
+
+        .qty-input::-webkit-outer-spin-button,
+        .qty-input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .qty-btn {
+            background-color: #334155;
+            border: none;
+            color: #ffffff;
+            width: 30px;
+            height: 30px;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            user-select: none;
+            transition: background-color 0.15s;
+        }
+
+        .qty-btn:hover {
+            background-color: #10B981;
+        }
+
+        /* Info & Price Section */
+        .product-info h3 {
+            font-size: 1.3rem;
+            color: #ffffff;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .product-desc {
+            font-size: 0.88rem;
+            color: #94A3B8;
+            margin-bottom: 20px;
+            min-height: 45px;
+        }
+
+        .price-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            border-top: 1px solid #334155;
+            padding-top: 15px;
+        }
+
+        .price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #10B981;
+        }
+
+        .buy-now-btn {
+            background-color: #10B981;
+            color: #ffffff;
+            border: none;
+            width: 100%;
+            padding: 14px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+        }
+
+        .buy-now-btn:hover {
+            background-color: #059669;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+        }
+
+        /* Sticky Bottom Cart Summary Dashboard */
+        .cart-status-bar {
+            background-color: #1E293B;
+            border: 2px dashed #10B981;
+            border-radius: 16px;
+            padding: 20px 25px;
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #ffffff;
+        }
+
+        .cart-total {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #10B981;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            font-size: 0.9rem;
+            color: #475569;
+            padding-top: 25px;
+            border-top: 1px solid #1E293B;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="logo">Roy Games <span>3D Engine Store</span></div>
+            <div class="tagline">Interactive Hardware Showcase & Pro Virtual Assets</div>
+            <div class="instruction-badge">💡 Tip: Use your mouse or finger to drag and rotate the 3D items!</div>
+        </header>
+
+        <main>
+            <div class="marketplace-grid">
+                
+                <div class="product-card">
+                    <div>
+                        <div class="canvas-container" id="canvas-laptop"></div>
+                        
+                        <div class="quantity-control">
+                            <span class="quantity-label">Quantity Matrix</span>
+                            <div class="qty-actions">
+                                <button class="qty-btn" onclick="adjustQuantity('prod-laptop', -1)">-</button>
+                                <input type="number" id="prod-laptop" class="qty-input" value="1" min="1" onchange="validateInput(this)">
+                                <button class="qty-btn" onclick="adjustQuantity('prod-laptop', 1)">+</button>
+                            </div>
+                        </div>
+
+                        <div class="product-info">
+                            <h3>ROG Pro Gaming Laptop</h3>
+                            <p class="product-desc">Rendered with cyan metallic alloy shielding and integrated processing cores for heavy deployment.</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="price-row">
+                            <span class="price">₹1,45,000</span>
+                        </div>
+                        <button class="buy-now-btn" onclick="processAddToCart('ROG Pro Gaming Laptop', 145000, 'prod-laptop')">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div>
+                        <div class="canvas-container" id="canvas-jersey"></div>
+                        
+                        <div class="quantity-control">
+                            <span class="quantity-label">Quantity Matrix</span>
+                            <div class="qty-actions">
+                                <button class="qty-btn" onclick="adjustQuantity('prod-jersey', -1)">-</button>
+                                <input type="number" id="prod-jersey" class="qty-input" value="1" min="1" onchange="validateInput(this)">
+                                <button class="qty-btn" onclick="adjustQuantity('prod-jersey', 1)">+</button>
+                            </div>
+                        </div>
+
+                        <div class="product-info">
+                            <h3>"World of Bharat" Jersey</h3>
+                            <p class="product-desc">Official premium neon-crimson flexible design polymer fabric structure for e-sports performance.</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="price-row">
+                            <span class="price">₹1,299</span>
+                        </div>
+                        <button class="buy-now-btn" onclick="processAddToCart('World of Bharat Official Jersey', 1299, 'prod-jersey')">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div>
+                        <div class="canvas-container" id="canvas-chair"></div>
+                        
+                        <div class="quantity-control">
+                            <span class="quantity-label">Quantity Matrix</span>
+                            <div class="qty-actions">
+                                <button class="qty-btn" onclick="adjustQuantity('prod-chair', -1)">-</button>
+                                <input type="number" id="prod-chair" class="qty-input" value="1" min="1" onchange="validateInput(this)">
+                                <button class="qty-btn" onclick="adjustQuantity('prod-chair', 1)">+</button>
+                            </div>
+                        </div>
+
+                        <div class="product-info">
+                            <h3>Ergonomic Pro Chair</h3>
+                            <p class="product-desc">Engineered with dark purple lumbar composite pillars for maximum stability during long coding hours.</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="price-row">
+                            <span class="price">₹18,500</span>
+                        </div>
+                        <button class="buy-now-btn" onclick="processAddToCart('Ergonomic Pro Gaming Chair', 18500, 'prod-chair')">Add to Cart</button>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="cart-status-bar">
+                <div class="cart-title">🛒 Active Cart Status: <span id="total-items-counter" style="color: #10B981;">0</span> units loaded</div>
+                <div class="cart-total">Grand Total: <span id="total-price-counter">₹0</span></div>
+            </div>
+        </main>
+
+        <footer>
+            &copy; 2026 Roy Games Studio. Powered by Client-Side Mathematical WebGL Vector Technology.
+        </footer>
+    </div>
+
+    <script>
+        // Data Store Array for WebGL Engines
+        const trackingScenes = [];
+        let accumulatedItems = 0;
+        let accumulatedPrice = 0;
+
+        // Core 3D Scene Initialization Function
+        function build3DAssetViewer(containerId, productType) {
+            const targetBox = document.getElementById(containerId);
+            const displayWidth = targetBox.clientWidth;
+            const displayHeight = targetBox.clientHeight;
+
+            // 1. Build Scene & View Angle Camera
+            const engineScene = new THREE.Scene();
+            const viewCamera = new THREE.PerspectiveCamera(45, displayWidth / displayHeight, 0.1, 100);
+            viewCamera.position.z = 6;
+
+            // 2. Build Hardware WebGL Renderer Node
+            const hardwareRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            hardwareRenderer.setSize(displayWidth, displayHeight);
+            hardwareRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            targetBox.appendChild(hardwareRenderer.domElement);
+
+            // 3. Set Up Lighting Rig
+            const environmentAmbientLight = new THREE.AmbientLight(0xffffff, 0.6);
+            engineScene.add(environmentAmbientLight);
+
+            const directionalSunlight = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalSunlight.position.set(5, 5, 5);
+            engineScene.add(directionalSunlight);
+
+            // 4. Generate 3D Mathematical Shapes based on Products
+            let geometricMesh;
+
+            if (productType === 'laptop') {
+                // High-Tech Cyber Block for Laptop Body
+                const coreGeometry = new THREE.BoxGeometry(2.4, 0.15, 1.6);
+                const surfaceMaterial = new THREE.MeshStandardMaterial({ 
+                    color: 0x0ea5e9, // Bright Electric Cyan
+                    metalness: 0.7, 
+                    roughness: 0.2 
+                });
+                geometricMesh = new THREE.Mesh(coreGeometry, surfaceMaterial);
+            } 
+            else if (productType === 'jersey') {
+                // Thin Geometric Torso Grid for Team Jersey
+                const coreGeometry = new THREE.ConeGeometry(1.1, 2, 4);
+                const surfaceMaterial = new THREE.MeshStandardMaterial({ 
+                    color: 0xf43f5e, // Crimson Rose Vector
+                    metalness: 0.1, 
+                    roughness: 0.5 
+                });
+                geometricMesh = new THREE.Mesh(coreGeometry, surfaceMaterial);
+                geometricMesh.rotation.x = Math.PI; // Flip vertically to mimic jersey structure
+            } 
+            else if (productType === 'chair') {
+                // Cylindrical Central Axis Column for Pro Chair
+                const coreGeometry = new THREE.CylinderGeometry(0.8, 1, 1.8, 6);
+                const surfaceMaterial = new THREE.MeshStandardMaterial({ 
+                    color: 0xa855f7, // Royal Deep Purple
+                    metalness: 0.8, 
+                    roughness: 0.3 
+                });
+                geometricMesh = new THREE.Mesh(coreGeometry, surfaceMaterial);
+            }
+
+            engineScene.add(geometricMesh);
+
+            // 5. Track State Variables for Dynamic Rotations
+            let activeDragState = false;
+            let previousMouseCoords = { x: 0, y: 0 };
+
+            // Register Interactive Drag Logic
+            targetBox.addEventListener('mousedown', (e) => {
+                activeDragState = true;
+                previousMouseCoords = { x: e.clientX, y: e.clientY };
+            });
+
+            window.addEventListener('mouseup', () => { activeDragState = false; });
+
+            targetBox.addEventListener('mousemove', (e) => {
+                if (!activeDragState) return;
+                const horizontalDelta = e.clientX - previousMouseCoords.x;
+                const verticalDelta = e.clientY - previousMouseCoords.y;
+
+                geometricMesh.rotation.y += horizontalDelta * 0.01;
+                geometricMesh.rotation.x += verticalDelta * 0.01;
+
+                previousMouseCoords = { x: e.clientX, y: e.clientY };
+            });
+
+            // Mobile Touch Support
+            targetBox.addEventListener('touchstart', (e) => {
+                activeDragState = true;
+                previousMouseCoords = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+            });
+            targetBox.addEventListener('touchend', () => { activeDragState = false; });
+            targetBox.addEventListener('touchmove', (e) => {
+                if (!activeDragState) return;
+                const horizontalDelta = e.touches[0].clientX - previousMouseCoords.x;
+                const verticalDelta = e.touches[0].clientY - previousMouseCoords.y;
+
+                geometricMesh.rotation.y += horizontalDelta * 0.015;
+                geometricMesh.rotation.x += verticalDelta * 0.015;
+
+                previousMouseCoords = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+            });
+
+            // Save Reference to Object State Array
+            trackingScenes.push({
+                scene: engineScene,
+                camera: viewCamera,
+                renderer: hardwareRenderer,
+                mesh: geometricMesh,
+                box: targetBox
+            });
+        }
+
+        // Live Frame Rendering Loop
+        function runGraphicsLoop() {
+            requestAnimationFrame(runGraphicsLoop);
+            
+            trackingScenes.forEach(item => {
+                // Passive baseline automatic rotation loop if not dragged
+                item.mesh.rotation.y += 0.005;
+                item.renderer.render(item.scene, item.camera);
+            });
+        }
+
+        // Initialize WebGL instances when elements settle
+        window.addEventListener('DOMContentLoaded', () => {
+            build3DAssetViewer('canvas-laptop', 'laptop');
+            build3DAssetViewer('canvas-jersey', 'jersey');
+            build3DAssetViewer('canvas-chair', 'chair');
+            runGraphicsLoop();
+        });
+
+        // Window resize support logic
+        window.addEventListener('resize', () => {
+            trackingScenes.forEach(item => {
+                const updatedW = item.box.clientWidth;
+                const updatedH = item.box.clientHeight;
+                item.camera.aspect = updatedW / updatedH;
+                item.camera.updateProjectionMatrix();
+                item.renderer.setSize(updatedW, updatedH);
+            });
+        });
+
+        // Cart Business Logic & Calculations
+        function adjustQuantity(inputId, changeValue) {
+            const inputField = document.getElementById(inputId);
+            let currentVal = parseInt(inputField.value) || 1;
+            currentVal += changeValue;
+            if (currentVal < 1) currentVal = 1;
+            inputField.value = currentVal;
+        }
+
+        function validateInput(inputElement) {
+            let enteredVal = parseInt(inputElement.value);
+            if (isNaN(enteredVal) || enteredVal < 1) inputElement.value = 1;
+        }
+
+        function processAddToCart(itemName, ratePerUnit, inputId) {
+            const quantityField = document.getElementById(inputId);
+            const verifiedQty = parseInt(quantityField.value) || 1;
+            
+            accumulatedItems += verifiedQty;
+            accumulatedPrice += (ratePerUnit * verifiedQty);
+
+            document.getElementById('total-items-counter').innerText = accumulatedItems;
+            document.getElementById('total-price-counter').innerText = '₹' + accumulatedPrice.toLocaleString('en-IN');
+
+            alert('Successfully added ' + verifiedQty + 'x ' + itemName + ' to your 3D system cart!');
+        }
+    </script>
+</body>
+</html>
